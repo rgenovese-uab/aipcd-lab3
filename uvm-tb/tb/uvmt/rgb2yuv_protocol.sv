@@ -43,6 +43,8 @@ class protocol extends utils_pkg::protocol_base_class;
     // Pushes the operation to the DUT
     // Called by driver
     virtual function drive (ins_tx req);
+        $display("RECEIVED ISS TRANSACTION TO DRIVE - PC %h INSTRUCTION %h %s",req.iss_state.pc, req.iss_state.instr, req.iss_state.disasm);
+        $display("INSTRUCTION SRC %h RES %h",req.iss_state.src1_value, req.iss_state.dst_value);
     endfunction
     
 
