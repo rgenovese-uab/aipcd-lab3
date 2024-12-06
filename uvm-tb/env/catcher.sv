@@ -12,7 +12,7 @@ class catcher extends uvm_report_catcher;
             string report_msg;
             string cause_str;
             string dasm;
-            iss_state_t last_instr;
+            core_state_t last_instr;
             int executed_ins;
 
             fd = $fopen({getenv("VERIF"), "/sim/build/report.yaml"}, "w");
@@ -23,7 +23,7 @@ class catcher extends uvm_report_catcher;
 
             if (get_id() == "PC MISMATCH") begin
                 cause_str = "PC MISMATCH";
-                if(!uvm_config_db#(iss_state_t)::get(null,"*", "fail_instr", last_instr)) begin
+                if(!uvm_config_db#(core_state_t)::get(null,"*", "fail_instr", last_instr)) begin
                     `uvm_error(get_type_name(), "No fail_instr to report")
                     last_instr.pc = 'hDEAD;
                     last_instr.instr = 'hDEAD;
@@ -31,7 +31,7 @@ class catcher extends uvm_report_catcher;
             end
             else if (get_id() == "uvm_scoreboard") begin
                 cause_str = "MISMATCH";
-                if(!uvm_config_db#(iss_state_t)::get(null,"*", "fail_instr", last_instr)) begin
+                if(!uvm_config_db#(core_state_t)::get(null,"*", "fail_instr", last_instr)) begin
                     `uvm_error(get_type_name(), "No fail_instr to report")
                     last_instr.pc = 'hDEAD;
                     last_instr.instr = 'hDEAD;
@@ -39,7 +39,7 @@ class catcher extends uvm_report_catcher;
             end
             else if (get_id() == "top_tb") begin
                 cause_str = "TIMEOUT";
-                if(!uvm_config_db#(iss_state_t)::get(null,"*", "next_instr", last_instr)) begin
+                if(!uvm_config_db#(core_state_t)::get(null,"*", "next_instr", last_instr)) begin
                     `uvm_error(get_type_name(), $sformatf("%s:No next_instr to report", cause_str))
                     last_instr.pc = 'hDEAD;
                     last_instr.instr = 'hDEAD;
@@ -54,7 +54,7 @@ class catcher extends uvm_report_catcher;
                 last_instr.instr = 'hDEAD;
             end
             else begin
-                if(!uvm_config_db#(iss_state_t)::get(null,"*", "next_instr", last_instr)) begin
+                if(!uvm_config_db#(core_state_t)::get(null,"*", "next_instr", last_instr)) begin
                     `uvm_error(get_type_name(), "No next_instr to report")
                     last_instr.pc = 'hDEAD;
                     last_instr.instr = 'hDEAD;

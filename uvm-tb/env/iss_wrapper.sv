@@ -21,7 +21,7 @@ class iss_wrapper extends uvm_object;
 
     endfunction : setup
 
-    virtual function void run_and_retrieve_results(int unsigned instr, ref iss_state_t results);
+    virtual function void run_and_retrieve_results(int unsigned instr, ref core_state_t results);
 
     endfunction : run_and_retrieve_results
 
@@ -45,11 +45,11 @@ class iss_wrapper extends uvm_object;
 
     endfunction : set_interrupt
 
-    virtual function int run_until_vector_ins(ref iss_state_t iss_state);
+    virtual function int run_until_vector_ins(ref core_state_t iss_state);
 
     endfunction : run_until_vector_ins
 
-    virtual function int run_until_rgb2yuv_instruction(ref iss_state_t iss_state);
+    virtual function int run_until_rgb2yuv_instruction(ref core_state_t iss_state);
 
     endfunction : run_until_rgb2yuv_instruction
 

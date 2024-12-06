@@ -16,7 +16,7 @@ class seq extends uvm_sequence;
     virtual task body();
         ins_tx m_ins_tx;
         int state;
-        iss_state_t spike_state;
+        core_state_t spike_state;
 
         forever begin
             m_ins_tx = ins_tx::type_id::create("m_ins_tx");

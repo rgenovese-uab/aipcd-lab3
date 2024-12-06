@@ -1,3 +1,7 @@
+typedef longint unsigned    uint64_t;
+typedef int unsigned        uint32_t;
+typedef byte unsigned       uint8_t;
+
 typedef struct {
     uint8_t  trap_illegal;
     uint64_t mcause;
@@ -37,7 +41,7 @@ typedef struct {
     uint64_t store_mask;
     csr_t    csr;
     uint8_t  exc_bit;
-} iss_state_t;
+} core_state_t;
 
 typedef struct {
     int                 rgb;

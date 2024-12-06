@@ -10,7 +10,7 @@ class ins_tx extends uvm_sequence_item;
         super.new(name);
     endfunction : new
 
-    rand iss_state_t iss_state;
+    rand core_state_t iss_state;
 
     virtual function void do_print(uvm_printer printer);
         super.do_print(printer);

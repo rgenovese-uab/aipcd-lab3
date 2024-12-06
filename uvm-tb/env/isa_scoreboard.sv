@@ -52,7 +52,7 @@ class isa_scoreboard extends uvm_scoreboard;
     endtask : run_phase
 
     
-    function compare(dut_state_t dut, iss_state_t iss);
+    function compare(dut_state_t dut, core_state_t iss);
         int errors = 0;
         int dest_valid;
         
@@ -60,14 +60,14 @@ class isa_scoreboard extends uvm_scoreboard;
         //[TODO] Compare ISS vs DUT results
 
         if (errors) begin
-            uvm_config_db #(iss_state_t)::set(null, "*", "fail_instr", iss);
+            uvm_config_db #(core_state_t)::set(null, "*", "fail_instr", iss);
             uvm_config_db #(exit_status_code_t)::set(null, "*", "exit_status_code", EXIT_EXECUTION_ERROR);
             `uvm_info("uvm_scoreboard", $sformatf("Wrong: PC 0x%0h, INSTR 0x%0h DISASM: %s ", iss.pc[31:0], iss.instr[31:0], iss.disasm), UVM_LOW)
             `uvm_fatal("uvm_scoreboard", $sformatf(" Execution abort due to %d scoreboard mismatches", errors))
         end
         else begin
             uvm_config_db #(int)::set(null, "*", "executed_ins", executed_ins);
-            uvm_config_db #(iss_state_t)::set(null, "*", "last_instr", iss);
+            uvm_config_db #(core_state_t)::set(null, "*", "last_instr", iss);
             `uvm_info("uvm_scoreboard", $sformatf("Correct: PC 0x%0h, INSTR 0x%0h DISASM: %s ", iss.pc[31:0], iss.instr[31:0], iss.disasm), UVM_LOW)
             ++executed_ins;
         end
@@ -78,7 +78,7 @@ class isa_scoreboard extends uvm_scoreboard;
         string cause_str;
         string report_msg;
         string dasm;
-        iss_state_t last_instr;
+        core_state_t last_instr;
         exit_status_code_t exit_code;
         ins_tx iss_tx;
         uvm_coreservice_t cs;
@@ -94,7 +94,7 @@ class isa_scoreboard extends uvm_scoreboard;
         else begin
             case (exit_code)
             EXIT_EXECUTION_ERROR: begin
-                if(!uvm_config_db#(iss_state_t)::get(null,"*", "fail_instr", last_instr)) begin
+                if(!uvm_config_db#(core_state_t)::get(null,"*", "fail_instr", last_instr)) begin
                     `uvm_error(get_type_name(), "No fail_instr in the db")
                 end
                 cause_str = "SB_MISMATCH";
@@ -106,7 +106,7 @@ class isa_scoreboard extends uvm_scoreboard;
                 cause_str = "TIMEOUT";
             end
             default: begin
-                if(!uvm_config_db#(iss_state_t)::get(null,"*", "last_instr", last_instr)) begin
+                if(!uvm_config_db#(core_state_t)::get(null,"*", "last_instr", last_instr)) begin
                     `uvm_error(get_type_name(), "No fail_instr in the db")
                 end
             end

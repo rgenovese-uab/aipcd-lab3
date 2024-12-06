@@ -6,7 +6,7 @@
 import uvm_pkg::*;
 
 import "DPI-C" function void spike_setup(input longint argc, input string argv);
-import "DPI-C" function int run_and_inject(input int instr, output iss_state_t iss_state);
+import "DPI-C" function int run_and_inject(input int instr, output core_state_t iss_state);
 import "DPI-C" function int exit_code();
 import "DPI-C" function void set_tohost_addr(input longint tohost_addr, input longint fromhost_addr);
 import "DPI-C" function void get_memory_data(output longint mem_element, input longint mem_addr);
@@ -14,8 +14,8 @@ import "DPI-C" function void start_execution();
 import "DPI-C" function int set_memory_data(input int unsigned data, input longint unsigned address, input int size);
 import "DPI-C" function void do_step(input int unsigned n);
 import "DPI-C" function void spike_set_external_interrupt(int mip_val);
-import "DPI-C" function int  spike_run_until_vector_ins(inout iss_state_t iss_state);
-import "DPI-C" function int  spike_run_until_rgb2yuv_instruction(inout iss_state_t iss_state);
+import "DPI-C" function int  spike_run_until_vector_ins(inout core_state_t iss_state);
+import "DPI-C" function int  spike_run_until_rgb2yuv_instruction(inout core_state_t iss_state);
 
 class spike extends iss_wrapper;
     `uvm_object_utils(spike)
@@ -50,7 +50,7 @@ class spike extends iss_wrapper;
 
     endfunction : setup
 
-    virtual function void run_and_retrieve_results(input int unsigned instr, ref iss_state_t results);
+    virtual function void run_and_retrieve_results(input int unsigned instr, ref core_state_t results);
         int exitcode;
 
         if (!active)
@@ -83,14 +83,14 @@ class spike extends iss_wrapper;
     endfunction : step
 
     virtual function void set_interrupt(input int unsigned value);
-        iss_state_t tmp;
+        core_state_t tmp;
         `uvm_info(get_type_name(), $sformatf("Spike set_interrupt with value: %h", value), UVM_DEBUG)
         spike_set_external_interrupt((1 << value));
         run_and_retrieve_results(32'h13, tmp);
         spike_set_external_interrupt(0);
     endfunction : set_interrupt
 
-    virtual function int run_until_vector_ins(ref iss_state_t iss_state);
+    virtual function int run_until_vector_ins(ref core_state_t iss_state);
         int exitcode;
 
         if (!active)
@@ -109,7 +109,7 @@ class spike extends iss_wrapper;
 
     endfunction : run_until_vector_ins
 
-    virtual function int run_until_rgb2yuv_instruction(ref iss_state_t iss_state);
+    virtual function int run_until_rgb2yuv_instruction(ref core_state_t iss_state);
         int exitcode;
 
         if (!active)
