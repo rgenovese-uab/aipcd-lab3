@@ -1,0 +1,22 @@
+
+typedef enum int {
+    EXIT_SUCCESS,
+    EXIT_TIMEOUT,
+    EXIT_COMP_ERROR,
+    EXIT_EXECUTION_ERROR,
+    EXIT_SPIKE_ERROR,
+    EXIT_ASSERTION_ERROR,
+    EXIT_BINARY_ERROR,
+    EXIT_ILLEGAL_MISMATCH
+} exit_status_code_t;
+
+string exit_status_strings [8]  = '{
+    "EXIT_SUCCESS",
+    "EXIT_TIMEOUT",
+    "EXIT_COMP_ERROR",
+    "EXIT_EXECUTION_ERROR",
+    "EXIT_SPIKE_ERROR",
+    "EXIT_ASSERTION_ERROR",
+    "EXIT_BINARY_ERROR",
+    "EXIT_ILLEGAL_MISMATCH"
+};

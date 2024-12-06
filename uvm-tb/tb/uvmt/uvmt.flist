@@ -1,0 +1,10 @@
++incdir+${VERIF}/tb/uvmt/
+
+${VERIF}/tb/uvmt/str_utils_pkg.sv
+
+${VERIF}/tb/uvmt/uvmt_pkg.sv
+${VERIF}/tb/uvmt/interface.sv
+${VERIF}/tb/uvmt/top_tb_cfg.sv
+${VERIF}/tb/uvmt/test_harness.sv
+${VERIF}/tb/uvmt/top_tb.sv
+

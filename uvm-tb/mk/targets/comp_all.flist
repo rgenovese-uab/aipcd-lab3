@@ -1,0 +1,3 @@
+-f ${rtlfilelist}
+-f ${envfilelist}
+-f ${uvmfilelist}

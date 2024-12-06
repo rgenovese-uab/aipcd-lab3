@@ -1,0 +1,6 @@
+// Directories
++incdir+${VERIF}/env
++incdir+${VERIF}/tb/uvmt
+
+${VERIF}/env/utils_pkg.sv
+${VERIF}/env/env_pkg.sv
