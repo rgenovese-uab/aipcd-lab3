@@ -48,7 +48,7 @@ compile_all:
 	@${VLOG} -vv ${VLOG_FLAGS} -f ${VERIF}/mk/targets/comp_all.flist &> ${COMP_TRANSCRIPT_FILE}
 
 run:
-	@${VSIM} ${VSIM_FLAGS} +UVM_TESTNAME=bin_test top_tb &> ${SIM_TRANSCRIPT_FILE}
+	@${VSIM} ${VSIM_FLAGS} -64 +UVM_TESTNAME=bin_test top_tb &> ${SIM_TRANSCRIPT_FILE}
 
 
 clean:
