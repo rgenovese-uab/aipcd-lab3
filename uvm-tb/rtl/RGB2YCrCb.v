@@ -14,9 +14,9 @@ wire [7:0] r;
 wire [7:0] b;
 wire [7:0] g;
 
-wire [7:0] y;
-wire [7:0] cr;
-wire [7:0] cb;
+reg [7:0] y;
+reg [7:0] cr;
+reg [7:0] cb;
 
 wire [7:0] zero8;
 
@@ -24,9 +24,17 @@ assign r = data0[23:16];
 assign g = data0[15:8];
 assign b = data0[7:0];
 
-assign y = (19595 * r + 38470 * g + 7471 * b) >> 16;
-assign cr = 128 + ((-11059 * r - 21610 * g + 32768 * b) >> 16);
-assign cb = 128 + ((32768 * r - 27439 * g - 5329 * b) >> 16);
+always @(posedge clk) begin
+	if(reset) begin
+		y  <= 0;
+		cr <= 0;
+		cb <= 0;
+	end else begin
+		y  <= (19595 * r + 38470 * g + 7471 * b) >> 16;
+		cr <= 128 + ((-11059 * r - 21610 * g + 32768 * b) >> 16);
+		cb <= 128 + ((32768 * r - 27439 * g - 5329 * b) >> 16);
+	end
+end
 
 assign zero8[7:0] = 0;
 assign result ={zero8, y, cr, cb};
