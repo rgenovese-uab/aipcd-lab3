@@ -15,7 +15,6 @@ import "DPI-C" function int set_memory_data(input int unsigned data, input longi
 import "DPI-C" function void do_step(input int unsigned n);
 import "DPI-C" function void spike_set_external_interrupt(int mip_val);
 import "DPI-C" function int  spike_run_until_vector_ins(inout core_state_t iss_state);
-import "DPI-C" function int  spike_run_until_rgb2yuv_instruction(inout core_state_t iss_state);
 
 class spike extends iss_wrapper;
     `uvm_object_utils(spike)
@@ -108,25 +107,6 @@ class spike extends iss_wrapper;
         return active;
 
     endfunction : run_until_vector_ins
-
-    virtual function int run_until_rgb2yuv_instruction(ref core_state_t iss_state);
-        int exitcode;
-
-        if (!active)
-            `uvm_fatal(get_type_name(), $sformatf("Spike has finished but UVM tried to get a RGB2YUV instruction"))
-
-        active = spike_run_until_rgb2yuv_instruction(iss_state);
-
-        `uvm_info(get_type_name(), $sformatf("Retrieved instruction %h", iss_state.instr), UVM_DEBUG)
-
-        if (!active) begin
-            exitcode = exit_code();
-            `uvm_info(get_type_name(), $sformatf("Core has finished with exit code %h", exitcode), UVM_LOW)
-        end
-
-        return active;
-
-    endfunction : run_until_rgb2yuv_instruction
 
 
 endclass : spike

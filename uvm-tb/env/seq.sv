@@ -21,8 +21,7 @@ class seq extends uvm_sequence;
         forever begin
             m_ins_tx = ins_tx::type_id::create("m_ins_tx");
             start_item(m_ins_tx);
-            //state = m_iss_wrapper.run_until_vector_ins(spike_state);
-            state = m_iss_wrapper.run_until_rgb2yuv_instruction(spike_state);
+            state = m_iss_wrapper.run_until_vector_ins(spike_state); //Replace by your run_until_rgb2yuv_instruction
             if (!state) begin
                 iss_finished.trigger();
                 /*case(state)
